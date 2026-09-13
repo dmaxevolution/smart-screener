@@ -1,17 +1,27 @@
-- name: Commit and push updated data
+* name: Commit and push updated data
   run: |
-    git config user.name "github-actions[bot]"
-    git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+  git config user.name "github-actions[bot]"
+  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-    git add data.json
+  # Ambil perubahan terbaru dari GitHub terlebih dahulu
 
-    if git diff --cached --quiet; then
-      echo "No data changes"
-      exit 0
-    fi
+  git pull --rebase origin main
 
-    git commit -m "auto: update IDX PRO data"
+  # Tambahkan hanya data.json
 
-    git pull --rebase origin main
+  git add data.json
 
-    git push origin main
+  # Jika tidak ada perubahan, selesai
+
+  if git diff --cached --quiet; then
+  echo "No data changes"
+  exit 0
+  fi
+
+  # Commit data baru
+
+  git commit -m "auto: update IDX PRO data"
+
+  # Push ke GitHub
+
+  git push origin main
