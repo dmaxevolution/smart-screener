@@ -1,0 +1,35 @@
+const $ = s => document.querySelector(s);
+let raw = {}, stocks = [], view = 'all';
+let fav = new Set(JSON.parse(localStorage.getItem('idxpro_fav') || '[]'));
+const n = v => Number(v || 0);
+const fmt = v => n(v).toLocaleString('id-ID');
+function signalFromScore(x){ return x>=90?'ELITE BUY':x>=80?'STRONG BUY':x>=70?'BUY':x>=60?'WATCHLIST':x>=50?'WAIT':'AVOID'; }
+function normalize(s){
+ const score=n(s.professional_score ?? n(s.power_score)*10), close=n(s.close), sl=n(s.stop_loss || close*.95);
+ return {...s, professional_score:score, signal:s.signal||signalFromScore(score), strategy:s.strategy|| (n(s.ema20)>n(s.ema50)?'TREND FOLLOWING':'WAIT'), mtf_alignment:s.mtf_alignment ?? (n(s.ema20)>n(s.ema50)?'DAILY BULLISH':'DAILY MIXED'), risk_plan:s.risk_plan||{entry:close,stop_loss:sl,tp1:n(s.take_profit_1||close*1.08),tp2:n(s.take_profit_2||close*1.15)}, timeframes:s.timeframes||{daily:{trend:n(s.ema20)>n(s.ema50)?'BULLISH':'MIXED',rsi:s.rsi??null}}};
+}
+function getStocks(d){ return (d.all_stocks||d.stocks||d.top_10_entry||[]).map(normalize); }
+function render(){
+ const q=($('#search').value||'').toLowerCase(), sig=$('#signal').value;
+ let list=stocks.filter(s=>`${s.ticker||''} ${s.sector||''}`.toLowerCase().includes(q)&&(!sig||s.signal===sig));
+ if(view==='signals') list=list.filter(s=>['ELITE BUY','STRONG BUY','BUY'].includes(s.signal));
+ if(view==='favorites') list=list.filter(s=>fav.has(s.ticker));
+ const app=$('#app'); app.innerHTML='';
+ if(!list.length){ app.innerHTML='<div class="empty">Tidak ada emiten yang cocok.</div>'; return; }
+ const t=$('#card');
+ list.forEach(s=>{const el=t.content.cloneNode(true), c=el.querySelector('.card');
+  c.querySelector('h2').textContent=s.ticker||'-'; c.querySelector('.badge').textContent=s.signal; c.querySelector('.sector').textContent=s.sector||'Unknown'; c.querySelector('.price').textContent='Rp '+fmt(s.close); c.querySelector('.score').textContent='PRO SCORE '+s.professional_score+'/100';
+  const rsi=s.rsi ?? s.timeframes?.daily?.rsi ?? '-'; const mtf=typeof s.mtf_alignment==='object'?JSON.stringify(s.mtf_alignment):s.mtf_alignment;
+  c.querySelector('.meta').innerHTML='Strategi: <b>'+s.strategy+'</b><br>MTF: '+mtf+'<br>RSI: '+rsi;
+  const p=s.risk_plan||{}; c.querySelector('.plan').innerHTML='Entry '+fmt(p.entry)+' · SL '+fmt(p.stop_loss)+'<br>TP1 '+fmt(p.tp1)+' · TP2 '+fmt(p.tp2);
+  const b=c.querySelector('.fav'); b.textContent=fav.has(s.ticker)?'★':'☆'; b.onclick=()=>{fav.has(s.ticker)?fav.delete(s.ticker):fav.add(s.ticker);localStorage.setItem('idxpro_fav',JSON.stringify([...fav]));render();}; app.appendChild(el);
+ });
+}
+async function load(){
+ try{const r=await fetch('data.json?ts='+Date.now(),{cache:'no-store'}); if(!r.ok) throw new Error(String(r.status)); raw=await r.json(); localStorage.setItem('idxpro_data',JSON.stringify(raw));}
+ catch(e){raw=JSON.parse(localStorage.getItem('idxpro_data')||'{}');}
+ stocks=getStocks(raw); $('#count').textContent=raw.total_emiten||stocks.length; $('#ihsg').textContent=raw.ihsg?.close?fmt(raw.ihsg.close):'-'; $('#schema').textContent=stocks.length?'PRO/LEGACY READY':'EMPTY'; $('#status').textContent=stocks.length?'✓ '+stocks.length+' emiten siap':'⚠ Data tidak tersedia'; render();
+}
+$('#search').oninput=render; $('#signal').onchange=render;
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');view=b.dataset.view;render();});
+$('#refresh').onclick=load; window.addEventListener('online',load); if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{}); load();
