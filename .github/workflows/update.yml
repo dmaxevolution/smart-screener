@@ -1,31 +1,84 @@
-* name: Commit and push updated data
-  run: |
-  git config user.name "github-actions[bot]"
-  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+name: Update IDX PRO Data
 
-  git add data.json
+on:
+workflow_dispatch:
 
-  if git diff --cached --quiet; then
-  echo "No data changes"
-  exit 0
-  fi
+schedule:
+# WIB = UTC+7
+# Sesi pagi: 09:00 - 12:00 WIB
+- cron: "0,30 2-4 * * 1-5"
+- cron: "0 5 * * 1-5"
 
-  git commit -m "auto: update IDX PRO data"
+```
+# Sesi siang: 13:30 - 15:30 WIB
+- cron: "30 6 * * 1-5"
+- cron: "0,30 7 * * 1-5"
+- cron: "0 8 * * 1-5"
+```
 
-  for i in 1 2 3; do
-  if git push origin HEAD:main; then
-  echo "Push successful"
-  exit 0
-  fi
+push:
+paths:
+- "screener.py"
+- "requirements.txt"
+- ".github/workflows/update.yml"
 
-  ```
-  echo "Push failed. Syncing with remote and retrying..."
-  git fetch origin main
-  git rebase origin/main
-  sleep 3
-  ```
+permissions:
+contents: write
 
-  done
+concurrency:
+group: idx-pro-data-update
+cancel-in-progress: false
 
-  echo "Failed to push after 3 attempts"
-  exit 1
+jobs:
+update:
+runs-on: ubuntu-latest
+
+```
+steps:
+  - name: Checkout repository
+    uses: actions/checkout@v4
+    with:
+      fetch-depth: 0
+
+  - name: Setup Python
+    uses: actions/setup-python@v5
+    with:
+      python-version: "3.11"
+
+  - name: Install dependencies
+    run: pip install -r requirements.txt
+
+  - name: Run IDX PRO Screener
+    run: python screener.py
+
+  - name: Commit and push updated data
+    run: |
+      git config user.name "github-actions[bot]"
+      git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      git add data.json
+
+      if git diff --cached --quiet; then
+        echo "No data changes"
+        exit 0
+      fi
+
+      git commit -m "auto: update IDX PRO data"
+
+      for i in 1 2 3; do
+        if git push origin HEAD:main; then
+          echo "Push successful"
+          exit 0
+        fi
+
+        echo "Push failed. Syncing with remote..."
+
+        git fetch origin main
+        git rebase origin/main
+
+        sleep 3
+      done
+
+      echo "Failed to push after 3 attempts"
+      exit 1
+```
