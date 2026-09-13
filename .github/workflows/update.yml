@@ -1,23 +1,71 @@
 name: Update IDX PRO Data
+
 on:
   workflow_dispatch:
+
+  # WIB = UTC+7
+  # Senin-Jumat:
+  # Sesi pagi    : 09:00-11:30 WIB, setiap 30 menit
+  # Sesi siang   : 13:30-15:00 WIB, setiap 30 menit
+  # Final update : 15:30 WIB
   schedule:
-    - cron: '0 */6 * * 1-5'
+    - cron: '0,30 2-4 * * 1-5'
+    - cron: '0 5 * * 1-5'
+    - cron: '30 6 * * 1-5'
+    - cron: '0,30 7 * * 1-5'
+    - cron: '0 8 * * 1-5'
+
   push:
-    paths: ['screener.py','requirements.txt','.github/workflows/update.yml']
+    paths:
+      - 'screener.py'
+      - 'requirements.txt'
+      - '.github/workflows/update.yml'
+
 permissions:
   contents: write
+
+# Mencegah 2 update berjalan bersamaan dan saling bentrok saat push data.json
+concurrency:
+  group: idx-pro-data-update
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: {python-version: '3.11'}
-      - run: pip install -r requirements.txt
-      - run: python screener.py
-      - run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
+      - name: Checkout latest repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run IDX PRO Screener
+        run: python screener.py
+
+      - name: Commit and push updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Ambil commit terbaru untuk menghindari error:
+          # remote contains work that you do not have locally
+          git pull --rebase origin main
+
+          # Hanya data hasil engine yang di-commit otomatis
           git add data.json
-          git diff --cached --quiet || (git commit -m 'auto: update IDX PRO data' && git push)
+
+          if git diff --cached --quiet; then
+            echo "No data changes"
+            exit 0
+          fi
+
+          git commit -m "auto: update IDX PRO data"
+          git push origin main
