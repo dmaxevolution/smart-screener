@@ -1,0 +1,501 @@
+{
+  "version": 1,
+  "description": "Master database emiten IDX. Edit file ini untuk tambah/nonaktifkan emiten.",
+  "emiten": [
+    {
+      "ticker": "BDMN",
+      "sector": "Financials",
+      "active": true
+    },
+    {
+      "ticker": "AMMN",
+      "sector": "Basic Materials",
+      "active": true
+    },
+    {
+      "ticker": "MIKA",
+      "sector": "Healthcare",
+      "active": true
+    },
+    {
+      "ticker": "ERAA",
+      "sector": "Consumer Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "WINS",
+      "sector": "Energy",
+      "active": true
+    },
+    {
+      "ticker": "KOTA",
+      "sector": "Real Estate",
+      "active": true
+    },
+    {
+      "ticker": "BMRI",
+      "sector": "Financials",
+      "active": true
+    },
+    {
+      "ticker": "ITMG",
+      "sector": "Energy",
+      "active": true
+    },
+    {
+      "ticker": "INDY",
+      "sector": "Energy",
+      "active": true
+    },
+    {
+      "ticker": "HRUM",
+      "sector": "Energy",
+      "active": true
+    },
+    {
+      "ticker": "DOID",
+      "sector": "Energy",
+      "active": true
+    },
+    {
+      "ticker": "BUMI",
+      "sector": "Energy",
+      "active": true
+    },
+    {
+      "ticker": "ELSA",
+      "sector": "Energy",
+      "active": true
+    },
+    {
+      "ticker": "ANTM",
+      "sector": "Basic Materials",
+      "active": true
+    },
+    {
+      "ticker": "MDKA",
+      "sector": "Basic Materials",
+      "active": true
+    },
+    {
+      "ticker": "SMGR",
+      "sector": "Basic Materials",
+      "active": true
+    },
+    {
+      "ticker": "TOWR",
+      "sector": "Infrastructures",
+      "active": true
+    },
+    {
+      "ticker": "TBIG",
+      "sector": "Infrastructures",
+      "active": true
+    },
+    {
+      "ticker": "BSDE",
+      "sector": "Real Estate",
+      "active": true
+    },
+    {
+      "ticker": "PWON",
+      "sector": "Real Estate",
+      "active": true
+    },
+    {
+      "ticker": "SMRA",
+      "sector": "Real Estate",
+      "active": true
+    },
+    {
+      "ticker": "LEAD",
+      "sector": "Energy",
+      "active": true
+    },
+    {
+      "ticker": "MEDS",
+      "sector": "Healthcare",
+      "active": true
+    },
+    {
+      "ticker": "PSAB",
+      "sector": "Basic Materials",
+      "active": true
+    },
+    {
+      "ticker": "BNGA",
+      "sector": "Financials",
+      "active": true
+    },
+    {
+      "ticker": "BFIN",
+      "sector": "Financials",
+      "active": true
+    },
+    {
+      "ticker": "PNBN",
+      "sector": "Financials",
+      "active": true
+    },
+    {
+      "ticker": "PTBA",
+      "sector": "Energy",
+      "active": true
+    },
+    {
+      "ticker": "AKRA",
+      "sector": "Energy",
+      "active": true
+    },
+    {
+      "ticker": "CUAN",
+      "sector": "Energy",
+      "active": true
+    },
+    {
+      "ticker": "TINS",
+      "sector": "Basic Materials",
+      "active": true
+    },
+    {
+      "ticker": "AUTO",
+      "sector": "Consumer Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "ASII",
+      "sector": "Industrials",
+      "active": true
+    },
+    {
+      "ticker": "UNTR",
+      "sector": "Industrials",
+      "active": true
+    },
+    {
+      "ticker": "ENRG",
+      "sector": "Energy",
+      "active": true
+    },
+    {
+      "ticker": "CITA",
+      "sector": "Basic Materials",
+      "active": true
+    },
+    {
+      "ticker": "BBRI",
+      "sector": "Financials",
+      "active": true
+    },
+    {
+      "ticker": "ISAT",
+      "sector": "Infrastructures",
+      "active": true
+    },
+    {
+      "ticker": "JSMR",
+      "sector": "Infrastructures",
+      "active": true
+    },
+    {
+      "ticker": "ESSA",
+      "sector": "Basic Materials",
+      "active": true
+    },
+    {
+      "ticker": "JPFA",
+      "sector": "Consumer Non-Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "GOTO",
+      "sector": "Technology",
+      "active": true
+    },
+    {
+      "ticker": "PGEO",
+      "sector": "Infrastructures",
+      "active": true
+    },
+    {
+      "ticker": "HAIS",
+      "sector": "Energy",
+      "active": true
+    },
+    {
+      "ticker": "IMPC",
+      "sector": "Basic Materials",
+      "active": true
+    },
+    {
+      "ticker": "MEDC",
+      "sector": "Energy",
+      "active": true
+    },
+    {
+      "ticker": "BRPT",
+      "sector": "Basic Materials",
+      "active": true
+    },
+    {
+      "ticker": "INTP",
+      "sector": "Basic Materials",
+      "active": true
+    },
+    {
+      "ticker": "CPIN",
+      "sector": "Consumer Non-Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "MTEL",
+      "sector": "Infrastructures",
+      "active": true
+    },
+    {
+      "ticker": "DRMA",
+      "sector": "Consumer Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "JGLE",
+      "sector": "Consumer Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "BBCA",
+      "sector": "Financials",
+      "active": true
+    },
+    {
+      "ticker": "BBNI",
+      "sector": "Financials",
+      "active": true
+    },
+    {
+      "ticker": "ADRO",
+      "sector": "Energy",
+      "active": true
+    },
+    {
+      "ticker": "NCKL",
+      "sector": "Basic Materials",
+      "active": true
+    },
+    {
+      "ticker": "MBMA",
+      "sector": "Basic Materials",
+      "active": true
+    },
+    {
+      "ticker": "INDF",
+      "sector": "Consumer Non-Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "ACES",
+      "sector": "Consumer Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "GJTL",
+      "sector": "Consumer Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "WIFI",
+      "sector": "Technology",
+      "active": true
+    },
+    {
+      "ticker": "VKTR",
+      "sector": "Industrials",
+      "active": true
+    },
+    {
+      "ticker": "TSPC",
+      "sector": "Healthcare",
+      "active": true
+    },
+    {
+      "ticker": "CTRA",
+      "sector": "Real Estate",
+      "active": true
+    },
+    {
+      "ticker": "PTPP",
+      "sector": "Infrastructures",
+      "active": true
+    },
+    {
+      "ticker": "AVIA",
+      "sector": "Basic Materials",
+      "active": true
+    },
+    {
+      "ticker": "ICBP",
+      "sector": "Consumer Non-Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "EXCL",
+      "sector": "Infrastructures",
+      "active": true
+    },
+    {
+      "ticker": "BIRD",
+      "sector": "Infrastructures",
+      "active": true
+    },
+    {
+      "ticker": "KLBF",
+      "sector": "Healthcare",
+      "active": true
+    },
+    {
+      "ticker": "HEAL",
+      "sector": "Healthcare",
+      "active": true
+    },
+    {
+      "ticker": "ADHI",
+      "sector": "Infrastructures",
+      "active": true
+    },
+    {
+      "ticker": "INCO",
+      "sector": "Basic Materials",
+      "active": true
+    },
+    {
+      "ticker": "MYOR",
+      "sector": "Consumer Non-Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "WIIM",
+      "sector": "Consumer Non-Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "CMRY",
+      "sector": "Consumer Non-Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "GGRM",
+      "sector": "Consumer Non-Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "HMSP",
+      "sector": "Consumer Non-Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "MAPA",
+      "sector": "Consumer Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "SMSM",
+      "sector": "Consumer Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "BNBR",
+      "sector": "Industrials",
+      "active": true
+    },
+    {
+      "ticker": "ARTO",
+      "sector": "Financials",
+      "active": true
+    },
+    {
+      "ticker": "AGRO",
+      "sector": "Financials",
+      "active": true
+    },
+    {
+      "ticker": "PGAS",
+      "sector": "Energy",
+      "active": true
+    },
+    {
+      "ticker": "TLKM",
+      "sector": "Infrastructures",
+      "active": true
+    },
+    {
+      "ticker": "EMTK",
+      "sector": "Technology",
+      "active": true
+    },
+    {
+      "ticker": "BUKA",
+      "sector": "Technology",
+      "active": true
+    },
+    {
+      "ticker": "SIDO",
+      "sector": "Healthcare",
+      "active": true
+    },
+    {
+      "ticker": "BACH",
+      "sector": "Energy",
+      "active": true
+    },
+    {
+      "ticker": "BRIS",
+      "sector": "Financials",
+      "active": true
+    },
+    {
+      "ticker": "TPIA",
+      "sector": "Basic Materials",
+      "active": true
+    },
+    {
+      "ticker": "UNVR",
+      "sector": "Consumer Non-Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "AMRT",
+      "sector": "Consumer Non-Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "MAPI",
+      "sector": "Consumer Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "SILO",
+      "sector": "Healthcare",
+      "active": true
+    },
+    {
+      "ticker": "PANI",
+      "sector": "Real Estate",
+      "active": true
+    },
+    {
+      "ticker": "BREN",
+      "sector": "Infrastructures",
+      "active": true
+    },
+    {
+      "ticker": "SCMA",
+      "sector": "Consumer Cyclicals",
+      "active": true
+    },
+    {
+      "ticker": "BBTN",
+      "sector": "Financials",
+      "active": true
+    }
+  ]
+}
