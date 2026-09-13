@@ -4,9 +4,19 @@ let fav = new Set(JSON.parse(localStorage.getItem('idxpro_fav') || '[]'));
 const n = v => Number(v || 0);
 const fmt = v => n(v).toLocaleString('id-ID');
 function signalFromScore(x){ return x>=90?'ELITE BUY':x>=80?'STRONG BUY':x>=70?'BUY':x>=60?'WATCHLIST':x>=50?'WAIT':'AVOID'; }
+function entrySignal(s){
+ const score=Math.max(0,Math.min(100,n(s.entry_probability ?? s.signal_strength ?? s.professional_score)));
+ const rsi=n(s.rsi ?? s.timeframes?.daily?.rsi);
+ const trend=n(s.ema20)>n(s.ema50);
+ const strongEntry=score>=85 && trend && (rsi===0 || (rsi>=50&&rsi<=75));
+ if(strongEntry) return {pct:score,status:'ENTRY NOW',cls:'entry-now',label:'🔥 ENTRY NOW'};
+ if(score>=75) return {pct:score,status:'READY',cls:'ready',label:'🟢 READY'};
+ if(score>=50) return {pct:score,status:'WAIT',cls:'wait',label:'⚪ WAIT'};
+ return {pct:score,status:'AVOID',cls:'avoid',label:'🔴 AVOID'};
+}
 function normalize(s){
  const score=n(s.professional_score ?? n(s.power_score)*10), close=n(s.close), sl=n(s.stop_loss || close*.95);
- return {...s, professional_score:score, signal:s.signal||signalFromScore(score), strategy:s.strategy|| (n(s.ema20)>n(s.ema50)?'TREND FOLLOWING':'WAIT'), mtf_alignment:s.mtf_alignment ?? (n(s.ema20)>n(s.ema50)?'DAILY BULLISH':'DAILY MIXED'), risk_plan:s.risk_plan||{entry:close,stop_loss:sl,tp1:n(s.take_profit_1||close*1.08),tp2:n(s.take_profit_2||close*1.15)}, timeframes:s.timeframes||{daily:{trend:n(s.ema20)>n(s.ema50)?'BULLISH':'MIXED',rsi:s.rsi??null}}};
+ return {...s, professional_score:score, entry_probability:n(s.entry_probability ?? s.signal_strength ?? score), signal:s.signal||signalFromScore(score), strategy:s.strategy|| (n(s.ema20)>n(s.ema50)?'TREND FOLLOWING':'WAIT'), mtf_alignment:s.mtf_alignment ?? (n(s.ema20)>n(s.ema50)?'DAILY BULLISH':'DAILY MIXED'), risk_plan:s.risk_plan||{entry:close,stop_loss:sl,tp1:n(s.take_profit_1||close*1.08),tp2:n(s.take_profit_2||close*1.15)}, timeframes:s.timeframes||{daily:{trend:n(s.ema20)>n(s.ema50)?'BULLISH':'MIXED',rsi:s.rsi??null}}};
 }
 function getStocks(d){ return (d.all_stocks||d.stocks||d.top_10_entry||[]).map(normalize); }
 function render(){
@@ -19,6 +29,7 @@ function render(){
  const t=$('#card');
  list.forEach(s=>{const el=t.content.cloneNode(true), c=el.querySelector('.card');
   c.querySelector('h2').textContent=s.ticker||'-'; c.querySelector('.badge').textContent=s.signal; c.querySelector('.sector').textContent=s.sector||'Unknown'; c.querySelector('.price').textContent='Rp '+fmt(s.close); c.querySelector('.score').textContent='PRO SCORE '+s.professional_score+'/100';
+  const es=entrySignal(s); c.querySelector('.signal-percent').textContent=es.pct+'%'; c.querySelector('.signal-status').textContent=es.label; c.querySelector('.signal-status').className='signal-status '+es.cls; const bar=c.querySelector('.signal-fill'); bar.style.width=es.pct+'%'; bar.className='signal-fill '+es.cls;
   const rsi=s.rsi ?? s.timeframes?.daily?.rsi ?? '-'; const mtf=typeof s.mtf_alignment==='object'?JSON.stringify(s.mtf_alignment):s.mtf_alignment;
   c.querySelector('.meta').innerHTML='Strategi: <b>'+s.strategy+'</b><br>MTF: '+mtf+'<br>RSI: '+rsi;
   const p=s.risk_plan||{}; c.querySelector('.plan').innerHTML='Entry '+fmt(p.entry)+' · SL '+fmt(p.stop_loss)+'<br>TP1 '+fmt(p.tp1)+' · TP2 '+fmt(p.tp2);
