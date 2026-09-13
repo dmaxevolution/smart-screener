@@ -1,20 +1,8 @@
-# IDX TERMINAL PRO
-PWA screener dengan Multi-Timeframe Strategy Engine.
+# IDX TERMINAL PRO V2 FIXED
+Perbaikan utama: Legacy/PRO Schema Adapter. Data lama `all_stocks` tetap langsung dirender, lalu UI otomatis membuat field PRO fallback sampai engine Python menghasilkan schema lengkap.
 
-## Engine
-- 1H, 4H, Daily, Weekly, Monthly
-- EMA 20/50/200
-- RSI 14, MACD, ADX/+DI/-DI, ATR
-- Average Volume 20 & RVOL
-- Support/Resistance
-- Market Regime
-- MTF alignment
-- Trend Following, Pullback, Breakout
-- Professional Score 0-100
-- Risk plan: Stop, TP1, TP2
+## Deploy
+Upload semua isi folder ke GitHub repository. Aktifkan GitHub Pages dari branch utama. Jangan upload folder pembungkus ZIP saja jika ingin root Pages langsung bekerja.
 
-## GitHub Pages
-Upload seluruh isi repository, aktifkan Pages dari branch main. GitHub Actions akan menjalankan screener sesuai jadwal.
-
-## Penting
-Sinyal adalah screening/edukasi, bukan jaminan profit. Backtest dan risk management wajib dilakukan.
+## Jika cache lama
+Tutup PWA, buka ulang, atau hapus site data sekali. Service worker V2 membersihkan cache versi sebelumnya.
